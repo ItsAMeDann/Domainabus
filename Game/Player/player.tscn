@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://4fiaxga2wqq1"]
+
+[ext_resource type="Script" uid="uid://bf71l0rw8t77o" path="res://Game/Player/player_controller.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://cbhkapakk6ege" path="res://Asset/Placeholder/Char.png" id="2"]
+[ext_resource type="Script" uid="uid://boku1e33mu1iv" path="res://Game/Weapon/weapon_manager.gd" id="3"]
+[ext_resource type="Script" uid="uid://dbu50pxafibur" path="res://Game/Component/health_component.gd" id="4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 14.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2"]
+radius = 18.0
+
+[node name="Player" type="CharacterBody2D" unique_id=1088625148]
+collision_mask = 10
+script = ExtResource("1")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=864250620]
+scale = Vector2(2, 2)
+texture = ExtResource("2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1909184316]
+shape = SubResource("CircleShape2D_1")
+
+[node name="WeaponMount" type="Marker2D" parent="." unique_id=501480018]
+position = Vector2(20, 0)
+
+[node name="WeaponManager" type="Node" parent="WeaponMount" unique_id=1832455099]
+script = ExtResource("3")
+
+[node name="EnemyDetector" type="Area2D" parent="." unique_id=340152829]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetector" unique_id=258631000]
+shape = SubResource("CircleShape2D_2")
+
+[node name="HealthComponent" type="Node" parent="." unique_id=893718227]
+script = ExtResource("4")
+
+[connection signal="body_entered" from="EnemyDetector" to="." method="_on_enemy_detector_body_entered"]
+[connection signal="died" from="HealthComponent" to="." method="_on_died"]

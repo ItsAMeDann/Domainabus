@@ -1,0 +1,131 @@
+[gd_scene format=3 uid="uid://dx6tfsviy0got"]
+
+[ext_resource type="Script" uid="uid://c7x056t25kkoy" path="res://Game/Arena/arena.gd" id="1"]
+[ext_resource type="PackedScene" path="res://Game/Player/player.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://Game/Wave/wave_manager.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://Game/HUD/hud.tscn" id="4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_top_bottom"]
+size = Vector2(2080, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_left_right"]
+size = Vector2(40, 1240)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle"]
+size = Vector2(120, 120)
+
+[node name="Arena" type="Node2D" unique_id=1229164195]
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="." unique_id=276248086]
+offset_left = -80.0
+offset_top = -80.0
+offset_right = 2000.0
+offset_bottom = 1160.0
+color = Color(0.08, 0.1, 0.15, 1)
+metadata/_edit_lock_ = true
+
+[node name="Walls" type="Node2D" parent="." unique_id=1454201704]
+
+[node name="TopWall" type="StaticBody2D" parent="Walls" unique_id=1979862351 groups=["wall"]]
+position = Vector2(960, -20)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/TopWall" unique_id=2050337197]
+shape = SubResource("RectangleShape2D_top_bottom")
+
+[node name="ColorRect" type="ColorRect" parent="Walls/TopWall" unique_id=784810049]
+offset_left = -1040.0
+offset_top = -20.0
+offset_right = 1040.0
+offset_bottom = 20.0
+color = Color(0.15, 0.2, 0.3, 1)
+
+[node name="BottomWall" type="StaticBody2D" parent="Walls" unique_id=40631037 groups=["wall"]]
+position = Vector2(960, 1100)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/BottomWall" unique_id=64224009]
+shape = SubResource("RectangleShape2D_top_bottom")
+
+[node name="ColorRect" type="ColorRect" parent="Walls/BottomWall" unique_id=986804733]
+offset_left = -1040.0
+offset_top = -20.0
+offset_right = 1040.0
+offset_bottom = 20.0
+color = Color(0.15, 0.2, 0.3, 1)
+
+[node name="LeftWall" type="StaticBody2D" parent="Walls" unique_id=2100220864 groups=["wall"]]
+position = Vector2(-20, 540)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/LeftWall" unique_id=1770122020]
+shape = SubResource("RectangleShape2D_left_right")
+
+[node name="ColorRect" type="ColorRect" parent="Walls/LeftWall" unique_id=895442556]
+offset_left = -20.0
+offset_top = -620.0
+offset_right = 20.0
+offset_bottom = 620.0
+color = Color(0.15, 0.2, 0.3, 1)
+
+[node name="RightWall" type="StaticBody2D" parent="Walls" unique_id=268734792 groups=["wall"]]
+position = Vector2(1940, 540)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightWall" unique_id=448911917]
+shape = SubResource("RectangleShape2D_left_right")
+
+[node name="ColorRect" type="ColorRect" parent="Walls/RightWall" unique_id=1262772588]
+offset_left = -20.0
+offset_top = -620.0
+offset_right = 20.0
+offset_bottom = 620.0
+color = Color(0.15, 0.2, 0.3, 1)
+
+[node name="Obstacles" type="Node2D" parent="." unique_id=1712321665]
+
+[node name="Obstacle1" type="StaticBody2D" parent="Obstacles" unique_id=212487320 groups=["wall"]]
+position = Vector2(500, 400)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/Obstacle1" unique_id=1096740437]
+shape = SubResource("RectangleShape2D_obstacle")
+
+[node name="ColorRect" type="ColorRect" parent="Obstacles/Obstacle1" unique_id=1954163648]
+offset_left = -60.0
+offset_top = -60.0
+offset_right = 60.0
+offset_bottom = 60.0
+color = Color(0.15, 0.2, 0.3, 1)
+
+[node name="Obstacle2" type="StaticBody2D" parent="Obstacles" unique_id=657719630 groups=["wall"]]
+position = Vector2(1420, 680)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/Obstacle2" unique_id=1933492236]
+shape = SubResource("RectangleShape2D_obstacle")
+
+[node name="ColorRect" type="ColorRect" parent="Obstacles/Obstacle2" unique_id=1910864526]
+offset_left = -60.0
+offset_top = -60.0
+offset_right = 60.0
+offset_bottom = 60.0
+color = Color(0.15, 0.2, 0.3, 1)
+
+[node name="EnemyContainer" type="Node2D" parent="." unique_id=261884993]
+
+[node name="BulletContainer" type="Node2D" parent="." unique_id=239318910]
+
+[node name="Player" parent="." unique_id=1015130710 instance=ExtResource("2")]
+position = Vector2(960, 540)
+
+[node name="WaveManager" parent="." unique_id=179709692 instance=ExtResource("3")]
+
+[node name="HUD" parent="." unique_id=2113217086 instance=ExtResource("4")]
