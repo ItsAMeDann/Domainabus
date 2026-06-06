@@ -1,6 +1,6 @@
 extends Node
 
-signal weapon_switched(weapon_name: String, weapon_index: int)
+signal weapon_switched(weapon_name: String, weapon_index: int, icon: Texture2D)
 
 const WEAPONS: Array[PackedScene] = [
 	preload("res://Game/Weapon/pistol.tscn"),
@@ -45,10 +45,13 @@ func _equip_weapon(index: int) -> void:
 	cooldown_timer.stop()
 	
 	var weapon_name := "Pistol"
+	var weapon_icon: Texture2D = null
 	if current_weapon.has_method("get_weapon_name"):
 		weapon_name = current_weapon.get_weapon_name()
+	if current_weapon.has_method("get_weapon_icon"):
+		weapon_icon = current_weapon.get_weapon_icon()
 	
-	weapon_switched.emit(weapon_name, current_index)
+	weapon_switched.emit(weapon_name, current_index, weapon_icon)
 
 func fire() -> void:
 	if not can_fire or not current_weapon:

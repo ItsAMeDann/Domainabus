@@ -12,6 +12,12 @@ var current_state: PlayerState = PlayerState.WALKING
 @onready var health_component: Node = $HealthComponent
 
 var i_frame_timer: Timer
+var walk_particles: CPUParticles2D
+
+var knockback_velocity: Vector2 = Vector2.ZERO
+var camera: Camera2D
+var shake_intensity: float = 0.0
+var shake_decay: float = 5.0
 
 func _ready() -> void:
 	add_to_group("player")
@@ -22,10 +28,53 @@ func _ready() -> void:
 	i_frame_timer.wait_time = 0.25
 	i_frame_timer.one_shot = true
 	add_child(i_frame_timer)
+	
+	camera = Camera2D.new()
+	camera.limit_left = 0
+	camera.limit_top = 0
+	camera.limit_right = 1920
+	camera.limit_bottom = 1080
+	add_child(camera)
+	
+	_setup_walk_particles()
+
+func _setup_walk_particles() -> void:
+	walk_particles = CPUParticles2D.new()
+	walk_particles.emitting = false
+	walk_particles.amount = 6
+	walk_particles.lifetime = 0.4
+	walk_particles.gravity = Vector2(0, -50)
+	walk_particles.initial_velocity_min = 15
+	walk_particles.initial_velocity_max = 30
+	walk_particles.scale_amount_min = 2.0
+	walk_particles.scale_amount_max = 6.0
+	walk_particles.color = Color(0.8, 0.8, 0.8, 0.6)
+	walk_particles.position = Vector2(0, 15)
+	add_child(walk_particles)
+
+func apply_knockback(force: float, dir: Vector2) -> void:
+	knockback_velocity = dir * force
+
+func apply_camera_shake(intensity: float) -> void:
+	shake_intensity = max(shake_intensity, intensity)
 
 func _physics_process(delta: float) -> void:
 	if current_state == PlayerState.DEAD:
 		return
+		
+	# Camera shake logic
+	if shake_intensity > 0:
+		camera.offset = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized() * shake_intensity
+		shake_intensity = lerp(shake_intensity, 0.0, shake_decay * delta)
+		if shake_intensity < 1.0:
+			shake_intensity = 0.0
+			camera.offset = Vector2.ZERO
+			
+	# Knockback decay
+	if knockback_velocity.length() > 5.0:
+		knockback_velocity = knockback_velocity.lerp(Vector2.ZERO, delta * 15.0)
+	else:
+		knockback_velocity = Vector2.ZERO
 
 	# Handle aiming
 	var mouse_pos := get_global_mouse_position()
@@ -64,7 +113,11 @@ func _physics_process(delta: float) -> void:
 		speed_multiplier = 0.3
 
 	velocity = direction * max_speed * speed_multiplier * (delta * 100)
+	velocity += knockback_velocity
 	move_and_slide()
+	
+	if walk_particles:
+		walk_particles.emitting = velocity.length() > 10.0
 
 func _unhandled_input(event: InputEvent) -> void:
 	if current_state == PlayerState.DEAD:

@@ -12,8 +12,12 @@ func _ready() -> void:
 func _apply_damage() -> void:
 	var bodies := get_overlapping_bodies()
 	for body in bodies:
-		if body.is_in_group("enemy") and body.has_method("take_weapon_damage"):
-			body.take_weapon_damage(damage, weapon_type)
+		if body.is_in_group("enemy"):
+			if body.has_method("take_weapon_damage"):
+				body.take_weapon_damage(damage, weapon_type)
+			if body.has_method("apply_knockback"):
+				var push_dir = (body.global_position - global_position).normalized()
+				body.apply_knockback(push_dir, 300.0)
 
 func _play_explosion_animation() -> void:
 	if not sprite:
