@@ -1,9 +1,11 @@
 extends CanvasLayer
 
-@onready var wave_label: Label = $Control/TopLeft/WaveLabel
-@onready var enemy_count_label: Label = $Control/TopLeft/EnemyCountLabel
-@onready var health_bar: ProgressBar = $Control/BottomLeft/HealthBar
+@onready var health_bar: ProgressBar = $Control/TopLeft/HealthBar
+@onready var wave_label: Label = $Control/TopCenter/WaveLabel
+@onready var timer_label: Label = $Control/TopCenter/TimerLabel
+@onready var enemy_count_label: Label = $Control/TopRight/EnemyCountLabel
 @onready var weapon_label: Label = $Control/BottomLeft/WeaponLabel
+@onready var weapon_icon: TextureRect = $Control/BottomLeft/WeaponIcon
 @onready var wave_banner: Label = $Control/Center/WaveBanner
 
 func _ready() -> void:
@@ -26,7 +28,7 @@ func _connect_signals() -> void:
 		if weapon_manager:
 			weapon_manager.weapon_switched.connect(_on_weapon_switched)
 			if weapon_manager.current_weapon:
-				update_weapon(weapon_manager.current_weapon.get_weapon_name())
+				update_weapon(weapon_manager.current_weapon.get_weapon_name(), weapon_manager.current_weapon.get_weapon_icon() if weapon_manager.current_weapon.has_method("get_weapon_icon") else null)
 	
 	var wave_manager = get_tree().get_first_node_in_group("wave_manager")
 	if not wave_manager:
@@ -35,6 +37,7 @@ func _connect_signals() -> void:
 	if wave_manager:
 		wave_manager.wave_started.connect(_on_wave_started)
 		wave_manager.wave_ended.connect(_on_wave_ended)
+		wave_manager.wave_timer_tick.connect(_on_wave_timer_tick)
 		wave_manager.enemies_count_changed.connect(_on_enemies_count_changed)
 		update_wave(wave_manager.current_wave)
 		update_enemy_count(wave_manager.enemies_alive)
@@ -52,9 +55,11 @@ func update_health(current: float, max_val: float) -> void:
 		health_bar.max_value = max_val
 		health_bar.value = current
 
-func update_weapon(name: String) -> void:
+func update_weapon(name: String, icon: Texture2D) -> void:
 	if weapon_label:
 		weapon_label.text = "Weapon: " + name
+	if weapon_icon:
+		weapon_icon.texture = icon
 
 func show_wave_banner(wave_num: int) -> void:
 	if not wave_banner:
@@ -73,8 +78,8 @@ func show_wave_banner(wave_num: int) -> void:
 func _on_player_health_changed(new_health: float, max_health: float) -> void:
 	update_health(new_health, max_health)
 
-func _on_weapon_switched(weapon_name: String, _weapon_index: int) -> void:
-	update_weapon(weapon_name)
+func _on_weapon_switched(weapon_name: String, _weapon_index: int, icon: Texture2D = null) -> void:
+	update_weapon(weapon_name, icon)
 
 func _on_wave_started(wave_num: int) -> void:
 	update_wave(wave_num)
@@ -82,6 +87,12 @@ func _on_wave_started(wave_num: int) -> void:
 
 func _on_wave_ended(_wave_num: int) -> void:
 	pass
+
+func _on_wave_timer_tick(time_left: float) -> void:
+	if timer_label:
+		var mins = int(time_left) / 60
+		var secs = int(time_left) % 60
+		timer_label.text = "Time: %02d:%02d" % [mins, secs]
 
 func _on_enemies_count_changed(count: int) -> void:
 	update_enemy_count(count)
