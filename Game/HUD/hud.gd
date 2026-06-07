@@ -8,10 +8,22 @@ extends CanvasLayer
 @onready var weapon_icon: TextureRect = $Control/BottomLeft/WeaponIcon
 @onready var wave_banner: Label = $Control/Center/WaveBanner
 
+# -- JUICE & LOGIC NEW NODES --
+@onready var hurt_vignette: ColorRect = $HurtVignette
+@onready var inter_wave_label: Label = $Control/Center/InterWaveLabel
+
 func _ready() -> void:
 	if wave_banner:
 		wave_banner.visible = false
 		wave_banner.modulate.a = 0.0
+		
+	if hurt_vignette:
+		hurt_vignette.visible = false
+		hurt_vignette.modulate.a = 0.0
+		
+	if inter_wave_label:
+		inter_wave_label.visible = false
+		inter_wave_label.modulate.a = 0.0
 
 	call_deferred("_connect_signals")
 
@@ -23,6 +35,10 @@ func _connect_signals() -> void:
 			health.health_changed.connect(_on_player_health_changed)
 			health.died.connect(_on_player_died)
 			update_health(health.current_health, health.max_health)
+			
+		# Connect signal JUICE
+		if player.has_signal("player_hurt"):
+			player.player_hurt.connect(_on_player_hurt)
 			
 		var weapon_manager = player.get_node_or_null("WeaponMount/WeaponManager")
 		if weapon_manager:
@@ -39,6 +55,8 @@ func _connect_signals() -> void:
 		wave_manager.wave_ended.connect(_on_wave_ended)
 		wave_manager.wave_timer_tick.connect(_on_wave_timer_tick)
 		wave_manager.enemies_count_changed.connect(_on_enemies_count_changed)
+		if wave_manager.has_signal("inter_wave_countdown"):
+			wave_manager.inter_wave_countdown.connect(_on_inter_wave_countdown)
 		update_wave(wave_manager.current_wave)
 		update_enemy_count(wave_manager.enemies_alive)
 
@@ -75,8 +93,21 @@ func show_wave_banner(wave_num: int) -> void:
 	tween.tween_property(wave_banner, "modulate:a", 0.0, 0.4)
 	tween.tween_callback(func(): wave_banner.visible = false)
 
+# -- CALLBACKS --
+
 func _on_player_health_changed(new_health: float, max_health: float) -> void:
 	update_health(new_health, max_health)
+
+func _on_player_hurt() -> void:
+	## Flash merah pada layar saat player terkena damage (JUICE)
+	if not hurt_vignette: return
+	
+	hurt_vignette.visible = true
+	hurt_vignette.modulate.a = 0.4
+	
+	var tween := create_tween()
+	tween.tween_property(hurt_vignette, "modulate:a", 0.0, 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_callback(func(): hurt_vignette.visible = false)
 
 func _on_weapon_switched(weapon_name: String, _weapon_index: int, icon: Texture2D = null) -> void:
 	update_weapon(weapon_name, icon)
@@ -84,6 +115,8 @@ func _on_weapon_switched(weapon_name: String, _weapon_index: int, icon: Texture2
 func _on_wave_started(wave_num: int) -> void:
 	update_wave(wave_num)
 	show_wave_banner(wave_num)
+	if inter_wave_label:
+		inter_wave_label.visible = false
 
 func _on_wave_ended(_wave_num: int) -> void:
 	pass
@@ -93,6 +126,16 @@ func _on_wave_timer_tick(time_left: float) -> void:
 		var mins = int(time_left) / 60
 		var secs = int(time_left) % 60
 		timer_label.text = "Time: %02d:%02d" % [mins, secs]
+
+func _on_inter_wave_countdown(time_left: float) -> void:
+	if not inter_wave_label: return
+	
+	if time_left > 0.0:
+		inter_wave_label.visible = true
+		inter_wave_label.modulate.a = 1.0
+		inter_wave_label.text = "Next Wave in: " + str(ceil(time_left))
+	else:
+		inter_wave_label.visible = false
 
 func _on_enemies_count_changed(count: int) -> void:
 	update_enemy_count(count)

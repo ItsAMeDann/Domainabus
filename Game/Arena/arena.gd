@@ -8,9 +8,15 @@ func _ready() -> void:
 	
 	if wave_manager:
 		wave_manager.start_game()
+		AudioManager.play_bgm_gameplay()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if Global.is_game_over:
+		# Jika game over, abaikan action pause
+		if event.is_action_pressed("pause"):
+			get_viewport().set_input_as_handled()
+			return
+			
 		if event.is_action_pressed("fire") or event.is_action_pressed("switch_weapon"):
 			Global.reset_game()
 			get_tree().reload_current_scene()

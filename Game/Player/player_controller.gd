@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 enum PlayerState { WALKING, FIRING, DEAD }
 
+signal player_hurt ## Signal untuk HUD — trigger hurt vignette
+
 @export var max_speed: float = 300.0
 
 var current_state: PlayerState = PlayerState.WALKING
@@ -128,11 +130,37 @@ func _unhandled_input(event: InputEvent) -> void:
 		weapon_manager.switch_weapon()
 
 func take_damage(amount: float) -> void:
+	## Dipanggil saat player menerima damage. Termasuk sistem juice lengkap.
 	if i_frame_timer and not i_frame_timer.is_stopped():
 		return
 	health_component.take_damage(amount)
+
+	# -- JUICE: Hitstop --
+	HitstopManager.apply_hitstop(0.08)
+
+	# -- JUICE: Camera Shake (lebih intens dari biasa) --
+	apply_camera_shake(8.0)
+
+	# -- JUICE: Signal ke HUD untuk Hurt Vignette --
+	player_hurt.emit()
+
+	# -- JUICE: I-Frame Blinking --
+	_blink_sprite()
+
 	if i_frame_timer:
 		i_frame_timer.start()
+
+func _blink_sprite() -> void:
+	## Kedipkan sprite selama durasi i-frame sebagai indikasi invulnerability
+	var blink_count := 5
+	for i in range(blink_count):
+		sprite.modulate.a = 0.2
+		# Timer process_always=true agar tidak terpengaruh hitstop
+		await get_tree().create_timer(0.025, true, false, true).timeout
+		sprite.modulate.a = 1.0
+		await get_tree().create_timer(0.025, true, false, true).timeout
+	# Pastikan sprite kembali normal
+	sprite.modulate.a = 1.0
 
 func _on_enemy_detector_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy"):

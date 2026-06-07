@@ -12,6 +12,7 @@ const WEAPON_ICON: Texture2D = preload("res://Asset/Placeholder/grenade_launcher
 @onready var muzzle: Marker2D = $Muzzle
 
 func fire() -> void:
+	AudioManager.play_sfx("launch")
 	var grenade := GRENADE_SCENE.instantiate() as Area2D
 	grenade.global_position = muzzle.global_position
 	grenade.direction = Vector2.RIGHT.rotated(global_rotation)
