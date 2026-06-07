@@ -12,6 +12,7 @@ const WEAPON_ICON: Texture2D = preload("res://Asset/Placeholder/pistol.png")
 @onready var muzzle: Marker2D = $Muzzle
 
 func fire() -> void:
+	AudioManager.play_sfx("gun")
 	var bullet := BULLET_SCENE.instantiate() as Area2D
 	bullet.global_position = muzzle.global_position
 	bullet.direction = Vector2.RIGHT.rotated(global_rotation)
