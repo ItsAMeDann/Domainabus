@@ -88,8 +88,10 @@ func _physics_process(delta: float) -> void:
 	if weapon_manager and weapon_manager.current_weapon:
 		if is_looking_left:
 			weapon_manager.current_weapon.scale.y = -1.0
+			weapon_mount.position.x = -abs(weapon_mount.position.x)
 		else:
 			weapon_manager.current_weapon.scale.y = 1.0
+			weapon_mount.position.x = abs(weapon_mount.position.x)
 
 	# Handle movement input
 	var direction := Vector2.ZERO

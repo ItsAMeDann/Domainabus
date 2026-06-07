@@ -55,9 +55,9 @@ func update_health(current: float, max_val: float) -> void:
 		health_bar.max_value = max_val
 		health_bar.value = current
 
-func update_weapon(name: String, icon: Texture2D) -> void:
+func update_weapon(weapon_name: String, icon: Texture2D) -> void:
 	if weapon_label:
-		weapon_label.text = "Weapon: " + name
+		weapon_label.text = "Weapon: " + weapon_name
 	if weapon_icon:
 		weapon_icon.texture = icon
 
@@ -90,7 +90,7 @@ func _on_wave_ended(_wave_num: int) -> void:
 
 func _on_wave_timer_tick(time_left: float) -> void:
 	if timer_label:
-		var mins = int(time_left) / 60
+		var mins = int(time_left) / 60.0
 		var secs = int(time_left) % 60
 		timer_label.text = "Time: %02d:%02d" % [mins, secs]
 

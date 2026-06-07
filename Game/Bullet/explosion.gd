@@ -6,18 +6,7 @@ extends Area2D
 @onready var sprite: Sprite2D = $Sprite2D
 
 func _ready() -> void:
-	call_deferred("_apply_damage")
 	_play_explosion_animation()
-
-func _apply_damage() -> void:
-	var bodies := get_overlapping_bodies()
-	for body in bodies:
-		if body.is_in_group("enemy"):
-			if body.has_method("take_weapon_damage"):
-				body.take_weapon_damage(damage, weapon_type)
-			if body.has_method("apply_knockback"):
-				var push_dir = (body.global_position - global_position).normalized()
-				body.apply_knockback(push_dir, 300.0)
 
 func _play_explosion_animation() -> void:
 	if not sprite:
@@ -33,3 +22,11 @@ func _play_explosion_animation() -> void:
 
 func _on_duration_timer_timeout() -> void:
 	queue_free()
+
+func _on_body_entered(body: Node2D) -> void:
+	if body.is_in_group("enemy"):
+		if body.has_method("take_weapon_damage"):
+			body.take_weapon_damage(damage, weapon_type)
+		if body.has_method("apply_knockback"):
+			var push_dir = (body.global_position - global_position).normalized()
+			body.apply_knockback(push_dir, 300.0)
