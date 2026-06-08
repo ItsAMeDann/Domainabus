@@ -18,6 +18,7 @@ func _on_fuse_timer_timeout() -> void:
 	_explode()
 
 func _explode() -> void:
+	AudioManager.play_sfx("explode")
 	var explosion := EXPLOSION_SCENE.instantiate() as Area2D
 	explosion.global_position = global_position
 	explosion.damage = damage

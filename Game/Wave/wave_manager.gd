@@ -4,6 +4,7 @@ signal wave_started(wave_number: int)
 signal wave_ended(wave_number: int)
 signal wave_timer_tick(time_left: float)
 signal enemies_count_changed(count: int)
+signal inter_wave_countdown(time_left: float) ## Signal baru untuk countdown antar wave
 
 const BACTERIOPHAGE_SCENE := preload("res://Game/Enemy/bacteriophage.tscn")
 const COCCUS_SCENE := preload("res://Game/Enemy/coccus.tscn")
@@ -13,6 +14,8 @@ var current_wave: int = 0
 var enemies_alive: int = 0
 var is_between_waves: bool = false
 var wave_duration: float = 30.0
+
+@export var inter_wave_delay: float = 5.0 ## Durasi jeda antar wave (detik)
 
 @onready var inter_wave_timer: Timer = $WaveTimer
 
@@ -30,6 +33,7 @@ func _ready() -> void:
 	add_to_group("wave_manager")
 	
 	if inter_wave_timer:
+		inter_wave_timer.wait_time = inter_wave_delay
 		inter_wave_timer.timeout.connect(_on_inter_wave_timer_timeout)
 		
 	wave_duration_timer = Timer.new()
@@ -43,8 +47,13 @@ func _ready() -> void:
 	add_child(spawn_tick_timer)
 
 func _process(_delta: float) -> void:
+	# Emit wave duration countdown
 	if not wave_duration_timer.is_stopped():
 		wave_timer_tick.emit(wave_duration_timer.time_left)
+	
+	# Emit inter-wave countdown ketika timer antar wave berjalan
+	if inter_wave_timer and not inter_wave_timer.is_stopped():
+		inter_wave_countdown.emit(inter_wave_timer.time_left)
 
 func start_game() -> void:
 	is_between_waves = false
@@ -57,6 +66,9 @@ func start_next_wave() -> void:
 	is_between_waves = false
 	current_wave += 1
 	Global.current_wave = current_wave
+	
+	# Reset countdown display
+	inter_wave_countdown.emit(0.0)
 	
 	wave_started.emit(current_wave)
 	
@@ -215,6 +227,10 @@ func _on_all_enemies_dead() -> void:
 			health.heal_full()
 			
 	var payload = Global.get_ai_payload()
+	# --- ADD THESE TWO LINES ---
+	var json_string = JSON.stringify(payload, "\t") # The "\t" adds indentation so it's easy to read
+	print("=== FULL AI PAYLOAD ===\n", json_string)
+	# ---------------------------
 	var best_fitness: float = -1.0
 	var best_pathogen: Dictionary = {}
 	
@@ -230,7 +246,9 @@ func _on_all_enemies_dead() -> void:
 	
 	Global.reset_wave_telemetry()
 	
+	# Mulai countdown inter-wave
 	if inter_wave_timer:
+		inter_wave_timer.wait_time = inter_wave_delay
 		inter_wave_timer.start()
 
 func _on_inter_wave_timer_timeout() -> void:

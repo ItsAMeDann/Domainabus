@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://d2xk637qrovd7"]
+
+[ext_resource type="Script" uid="uid://cx7xgijw15yuh" path="res://Singleton/audio_manager.gd" id="1_pff31"]
+[ext_resource type="AudioStream" uid="uid://bflxe315tey3l" path="res://Audio/BGM/hitslab-game-gaming-video-game-music-459876.mp3" id="2_wwvpx"]
+[ext_resource type="AudioStream" uid="uid://1nijns6gp30u" path="res://Audio/SFX/enemy_death.wav" id="3_67xvk"]
+[ext_resource type="AudioStream" uid="uid://dg7b1pddl0hl" path="res://Audio/SFX/enemy_hit.wav" id="4_2robe"]
+[ext_resource type="AudioStream" uid="uid://b4oed8oedrls" path="res://Audio/SFX/gun.wav" id="5_lxi1j"]
+[ext_resource type="AudioStream" uid="uid://ctj7j61wjn7nr" path="res://Audio/SFX/shotgun.wav" id="6_b1gy0"]
+[ext_resource type="AudioStream" uid="uid://cdqj20lng36o7" path="res://Audio/SFX/launcher_launch.wav" id="7_s5omw"]
+[ext_resource type="AudioStream" uid="uid://jv3t8eqvhwcy" path="res://Audio/SFX/launcher_explode.wav" id="8_vyf0b"]
+[ext_resource type="AudioStream" uid="uid://8kkqb0qoxmlv" path="res://Audio/SFX/change_weapon.wav" id="9_67xvk"]
+
+[node name="AudioManager" type="Node" unique_id=1136075505]
+script = ExtResource("1_pff31")
+
+[node name="Node" type="Node" parent="." unique_id=326984758]
+
+[node name="game" type="AudioStreamPlayer" parent="Node" unique_id=382010732]
+stream = ExtResource("2_wwvpx")
+volume_db = -15.0
+
+[node name="menu" type="AudioStreamPlayer" parent="Node" unique_id=2107189799]
+
+[node name="Node2" type="Node" parent="." unique_id=131571143]
+
+[node name="enemy_death" type="AudioStreamPlayer" parent="Node2" unique_id=775619213]
+stream = ExtResource("3_67xvk")
+volume_db = -5.0
+
+[node name="enemy_hit" type="AudioStreamPlayer" parent="Node2" unique_id=1836352268]
+stream = ExtResource("4_2robe")
+volume_db = -5.0
+
+[node name="gun" type="AudioStreamPlayer" parent="Node2" unique_id=1800539755]
+stream = ExtResource("5_lxi1j")
+volume_db = -10.0
+
+[node name="shotgun" type="AudioStreamPlayer" parent="Node2" unique_id=804463627]
+stream = ExtResource("6_b1gy0")
+volume_db = -5.0
+
+[node name="launch" type="AudioStreamPlayer" parent="Node2" unique_id=639328719]
+stream = ExtResource("7_s5omw")
+
+[node name="explode" type="AudioStreamPlayer" parent="Node2" unique_id=631820422]
+stream = ExtResource("8_vyf0b")
+
+[node name="change" type="AudioStreamPlayer" parent="Node2" unique_id=202882668]
+stream = ExtResource("9_67xvk")
+volume_db = 5.0

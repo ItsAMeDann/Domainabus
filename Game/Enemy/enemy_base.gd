@@ -109,6 +109,7 @@ func take_weapon_damage(base_damage: float, weapon_type: String) -> void:
 		health_component.take_damage(final_damage)
 
 func _play_hit_effects() -> void:
+	AudioManager.play_sfx("enemy_hit")
 	if not sprite: return
 	
 	# Hit Flash (longer if knocked back)
@@ -127,6 +128,9 @@ func _play_hit_effects() -> void:
 	tween_scale = create_tween()
 	tween_scale.tween_property(sprite, "scale", target_squash, 0.05).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tween_scale.tween_property(sprite, "scale", base_scale, 0.25).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	
+	# JUICE: Hitstop — freeze sesaat untuk kesan serangan berat
+	HitstopManager.apply_hitstop(0.06)
 
 func _spawn_death_particles() -> void:
 	var particles = CPUParticles2D.new()
@@ -153,6 +157,7 @@ func _spawn_death_particles() -> void:
 	timer.start()
 
 func _on_died() -> void:
+	AudioManager.play_sfx("enemy_death")
 	_spawn_death_particles()
 	
 	var data := {

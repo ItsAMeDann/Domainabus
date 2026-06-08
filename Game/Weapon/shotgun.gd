@@ -13,6 +13,7 @@ const WEAPON_ICON: Texture2D = preload("res://Asset/Placeholder/shotgun.png")
 @onready var muzzle: Marker2D = $Muzzle
 
 func fire() -> void:
+	AudioManager.play_sfx("shotgun")
 	var container := get_tree().get_first_node_in_group("bullet_container")
 	var base_rotation := global_rotation
 	

@@ -24,6 +24,7 @@ func _ready() -> void:
 	_equip_weapon(0)
 
 func switch_weapon() -> void:
+	AudioManager.play_sfx("change")
 	var next_index := (current_index + 1) % WEAPONS.size()
 	_equip_weapon(next_index)
 
@@ -54,7 +55,7 @@ func _equip_weapon(index: int) -> void:
 	weapon_switched.emit(weapon_name, current_index, weapon_icon)
 
 func fire() -> void:
-	if not can_fire or not current_weapon:
+	if not can_fire or not current_weapon or not current_weapon.is_inside_tree():
 		return
 		
 	if current_weapon.has_method("fire"):
