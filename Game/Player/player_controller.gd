@@ -133,6 +133,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func take_damage(amount: float) -> void:
 	## Dipanggil saat player menerima damage. Termasuk sistem juice lengkap.
+	if current_state == PlayerState.DEAD:
+		return
 	if i_frame_timer and not i_frame_timer.is_stopped():
 		return
 	health_component.take_damage(amount)
@@ -165,6 +167,8 @@ func _blink_sprite() -> void:
 	sprite.modulate.a = 1.0
 
 func _on_enemy_detector_body_entered(body: Node2D) -> void:
+	if current_state == PlayerState.DEAD:
+		return
 	if body.is_in_group("enemy"):
 		var damage: float = body.get("contact_damage") if "contact_damage" in body else 8.0
 		take_damage(damage)
@@ -172,8 +176,14 @@ func _on_enemy_detector_body_entered(body: Node2D) -> void:
 			body.damage_dealt += damage
 
 func _on_died() -> void:
+	if current_state == PlayerState.DEAD:
+		return
 	current_state = PlayerState.DEAD
 	Global.is_game_over = true
 	set_physics_process(false)
 	set_process_unhandled_input(false)
 	modulate = Color(0.3, 0.3, 0.3, 1.0)
+	
+	# Pause everything else in the scene tree
+	get_tree().paused = true
+	print("[Player] Player died. Game paused.")

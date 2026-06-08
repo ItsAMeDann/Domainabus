@@ -18,9 +18,14 @@ var survived_pathogens:Array = []
 
 # -- Spawn Rate Config (tweakable oleh AI API) --
 var default_spawn_config: Dictionary = {
-	"bacteriophage": { "weight": 1.0, "interval": 3.0 },
-	"spirillum":     { "weight": 0.5, "interval": 4.0 },
+	"bacteriophage": { "weight": 1.0, "interval": 4.0 },
+	"spirillum":     { "weight": 0.5, "interval": 3.0 },
 	"coccus":        { "weight": 0.3, "interval": 5.0 },
+}
+var min_spawn_config: Dictionary = {
+	"bacteriophage": {"interval": 4.0 },
+	"spirillum":     {"interval": 3.0 },
+	"coccus":        {"interval": 5.0 },
 }
 var spawn_config: Dictionary = default_spawn_config.duplicate(true)
 
