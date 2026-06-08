@@ -13,6 +13,9 @@ extends CanvasLayer
 @onready var inter_wave_label: Label = $Control/Center/InterWaveLabel
 
 func _ready() -> void:
+	add_to_group("hud")
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	
 	if wave_banner:
 		wave_banner.visible = false
 		wave_banner.modulate.a = 0.0
@@ -73,9 +76,9 @@ func update_health(current: float, max_val: float) -> void:
 		health_bar.max_value = max_val
 		health_bar.value = current
 
-func update_weapon(name: String, icon: Texture2D) -> void:
+func update_weapon(weapon_name: String, icon: Texture2D) -> void:
 	if weapon_label:
-		weapon_label.text = "Weapon: " + name
+		weapon_label.text = "Weapon: " + weapon_name
 	if weapon_icon:
 		weapon_icon.texture = icon
 
@@ -123,7 +126,7 @@ func _on_wave_ended(_wave_num: int) -> void:
 
 func _on_wave_timer_tick(time_left: float) -> void:
 	if timer_label:
-		var mins = int(time_left) / 60
+		var mins = int(time_left) / 60.0
 		var secs = int(time_left) % 60
 		timer_label.text = "Time: %02d:%02d" % [mins, secs]
 
@@ -148,5 +151,12 @@ func _on_player_died() -> void:
 			final_wave_label.text = "Final Wave Reached: " + str(Global.current_wave)
 		game_over_panel.visible = true
 		game_over_panel.modulate.a = 0.0
+		# Make sure tween runs even if paused
 		var tween := create_tween()
 		tween.tween_property(game_over_panel, "modulate:a", 1.0, 0.5)
+
+func show_inter_wave_stats(text: String) -> void:
+	if inter_wave_label:
+		inter_wave_label.visible = true
+		inter_wave_label.modulate.a = 1.0
+		inter_wave_label.text = text

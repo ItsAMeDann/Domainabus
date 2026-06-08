@@ -3,6 +3,7 @@ extends Node2D
 @onready var wave_manager: Node = $WaveManager
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	$EnemyContainer.add_to_group("enemy_container")
 	$BulletContainer.add_to_group("bullet_container")
 	
@@ -18,5 +19,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			return
 			
 		if event.is_action_pressed("fire") or event.is_action_pressed("switch_weapon"):
+			get_tree().paused = false
 			Global.reset_game()
 			get_tree().reload_current_scene()
