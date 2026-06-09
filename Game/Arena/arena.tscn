@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://c7x056t25kkoy" path="res://Game/Arena/arena.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://4fiaxga2wqq1" path="res://Game/Player/player.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://Game/Wave/wave_manager.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://Game/HUD/hud.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://tjvs40nk856j" path="res://Game/Wave/wave_manager.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://bupkqjiixiav8" path="res://Game/HUD/hud.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://Game/UI/pause_menu.tscn" id="5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_top_bottom"]
@@ -131,4 +131,4 @@ position = Vector2(960, 540)
 
 [node name="HUD" parent="." unique_id=2113217086 instance=ExtResource("4")]
 
-[node name="PauseMenu" parent="." instance=ExtResource("5")]
+[node name="PauseMenu" parent="." unique_id=860323803 instance=ExtResource("5")]

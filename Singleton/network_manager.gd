@@ -4,7 +4,7 @@ extends Node
 
 signal ai_prediction_received(success: bool, response_data: Dictionary)
 
-@export var server_url: String = "http://127.0.0.1:5000"
+@export var server_url: String = "http://domainabus-production.up.railway.app"
 @export var ai_predict_endpoint: String = "/ai-predict"
 @export var connection_timeout: float = 3.0
 @export var is_ai_enabled: bool = true
