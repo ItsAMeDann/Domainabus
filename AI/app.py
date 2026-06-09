@@ -1,3 +1,6 @@
+import os
+import gunicorn
+
 from flask import Flask, request, jsonify
 import random
 
@@ -261,5 +264,6 @@ def ai_logic():
     return jsonify(response_body)
 
 if __name__ == '__main__':
-    print("[DEBUG] Starting Flask server on http://127.0.0.1:5000")
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    print(f"[DEBUG] Starting Flask server on port {port}")
+    app.run()
