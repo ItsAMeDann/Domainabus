@@ -123,6 +123,7 @@ text = "Weapon: None"
 vertical_alignment = 1
 
 [node name="Center" type="CenterContainer" parent="Control" unique_id=324843908]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -144,6 +145,64 @@ horizontal_alignment = 1
 visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.85, 0.3, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 48
+text = "Next Wave in: 5"
+horizontal_alignment = 1
+
+[node name="InterWaveCenter" type="VBoxContainer" parent="Control" unique_id=1300346530]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -300.0
+offset_right = 300.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 16
+
+[node name="InterwaveTitle" type="Label" parent="Control/InterWaveCenter" unique_id=781523016]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+theme_override_font_sizes/font_size = 64
+text = "WAVE 1"
+horizontal_alignment = 1
+
+[node name="InterwaveEnemyDesc" type="Label" parent="Control/InterWaveCenter" unique_id=1142785535]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9490196, 0.8509804, 0.3019608, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 48
+text = "Next Wave in: 5
+Bas
+Ril"
+horizontal_alignment = 1
+
+[node name="InterwaveEnemyDom" type="Label" parent="Control/InterWaveCenter" unique_id=1567521704]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.2509804, 0.2509804, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 48
+text = "Dominant Enemy:"
+horizontal_alignment = 1
+
+[node name="InterwaveNextWaveCom" type="Label" parent="Control/InterWaveCenter" unique_id=1805864529]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.964, 0.76, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
 theme_override_constants/shadow_offset_x = 3
 theme_override_constants/shadow_offset_y = 3

@@ -12,6 +12,7 @@ var current_state: PlayerState = PlayerState.WALKING
 @onready var weapon_mount: Marker2D = $WeaponMount
 @onready var weapon_manager: Node = $WeaponMount/WeaponManager
 @onready var health_component: Node = $HealthComponent
+@onready var player_animation: AnimationPlayer = $PlayerAnimation
 
 var i_frame_timer: Timer
 var walk_particles: CPUParticles2D
@@ -20,6 +21,7 @@ var knockback_velocity: Vector2 = Vector2.ZERO
 var camera: Camera2D
 var shake_intensity: float = 0.0
 var shake_decay: float = 5.0
+var is_looking_left:bool = false
 
 func _ready() -> void:
 	add_to_group("player")
@@ -51,7 +53,7 @@ func _setup_walk_particles() -> void:
 	walk_particles.scale_amount_min = 2.0
 	walk_particles.scale_amount_max = 6.0
 	walk_particles.color = Color(0.8, 0.8, 0.8, 0.6)
-	walk_particles.position = Vector2(0, 15)
+	walk_particles.position = Vector2(0, 36.0)
 	add_child(walk_particles)
 
 func apply_knockback(force: float, dir: Vector2) -> void:
@@ -83,7 +85,7 @@ func _physics_process(delta: float) -> void:
 	weapon_mount.look_at(mouse_pos)
 	
 	# Flip sprite depending on mouse position relative to player
-	var is_looking_left := mouse_pos.x < global_position.x
+	is_looking_left = mouse_pos.x < global_position.x
 	sprite.flip_h = is_looking_left
 	
 	# Flip weapon vertically to prevent it from looking upside down when aiming left
@@ -101,6 +103,9 @@ func _physics_process(delta: float) -> void:
 	direction.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
 	if direction.length_squared() > 0.0:
 		direction = direction.normalized()
+		player_animation.play("walk")
+	else:
+		player_animation.play("idle")
 
 	# Determine speed modifier (holding weapon = 0.7x, firing = 0.3x)
 	var speed_multiplier := 0.7

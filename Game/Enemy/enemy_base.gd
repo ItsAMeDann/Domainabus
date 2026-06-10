@@ -30,6 +30,7 @@ func _ready() -> void:
 	add_to_group("enemy")
 	player_ref = get_tree().get_first_node_in_group("player")
 	spawn_time_ms = Time.get_ticks_msec()
+	process_mode = Node.PROCESS_MODE_PAUSABLE
 	
 	if health_component and not health_component.died.is_connected(_on_died):
 		health_component.died.connect(_on_died)
@@ -51,7 +52,8 @@ func _setup_walk_particles() -> void:
 	walk_particles.scale_amount_min = 2.0
 	walk_particles.scale_amount_max = 5.0
 	walk_particles.color = Color(0.8, 0.8, 0.8, 0.5)
-	walk_particles.position = Vector2(0, 10)
+	var radius:float = find_child("CollisionShape2D").shape.radius
+	walk_particles.position = Vector2(-radius, 0)
 	add_child(walk_particles)
 
 func _physics_process(delta: float) -> void:
@@ -100,7 +102,7 @@ func take_weapon_damage(base_damage: float, weapon_type: String) -> void:
 	var dmg_num = preload("res://Game/Component/damage_number.gd").new()
 	dmg_num.amount = final_damage
 	dmg_num.weapon_type = weapon_type
-	dmg_num.global_position = global_position
+	dmg_num.global_position = global_position + (Vector2(randf(), randf()) * 30)
 	get_tree().current_scene.add_child(dmg_num)
 	
 	_play_hit_effects()

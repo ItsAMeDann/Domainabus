@@ -1,24 +1,25 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene format=3 uid="uid://qmdpsa2iqie8"]
 
-[ext_resource type="Script" path="res://Game/Bullet/bullet.gd" id="1"]
-[ext_resource type="Texture2D" path="res://Asset/Placeholder/small_bullet.png" id="2"]
+[ext_resource type="Script" uid="uid://df71mgg6a4imr" path="res://Game/Bullet/bullet.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://2s152tvqge5" path="res://Asset/Placeholder/projectile.png" id="2_ld7d5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
-size = Vector2(8, 4)
+size = Vector2(31, 10)
 
-[node name="Bullet" type="Area2D"]
+[node name="Bullet" type="Area2D" unique_id=1859506651]
+process_mode = 1
 collision_layer = 4
 collision_mask = 10
-monitoring = true
 script = ExtResource("1")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2")
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=934595050]
+texture = ExtResource("2_ld7d5")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1866873494]
+position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_1")
 
-[node name="LifetimeTimer" type="Timer" parent="."]
+[node name="LifetimeTimer" type="Timer" parent="." unique_id=955669979]
 wait_time = 3.0
 one_shot = true
 autostart = true

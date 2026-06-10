@@ -1,35 +1,35 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene format=3 uid="uid://buhh61twih0s1"]
 
-[ext_resource type="Script" path="res://Game/Enemy/coccus.gd" id="1"]
-[ext_resource type="Texture2D" path="res://Asset/Placeholder/Tanker.png" id="2"]
-[ext_resource type="Script" path="res://Game/Component/health_component.gd" id="3"]
+[ext_resource type="Script" uid="uid://bh2sj6rtfpvev" path="res://Game/Enemy/coccus.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://cnoum3i0xe220" path="res://Asset/Placeholder/Beefy.png" id="2_73mvb"]
+[ext_resource type="Script" uid="uid://dbu50pxafibur" path="res://Game/Component/health_component.gd" id="3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
-radius = 30.0
+radius = 42.047592
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2"]
-radius = 32.0
+radius = 45.01111
 
-[node name="Coccus" type="CharacterBody2D"]
+[node name="Coccus" type="CharacterBody2D" unique_id=26949106]
 collision_layer = 2
 collision_mask = 11
 script = ExtResource("1")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.12, 0.12)
-texture = ExtResource("2")
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1537661777]
+scale = Vector2(0.27, 0.27)
+texture = ExtResource("2_73mvb")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1383109879]
 shape = SubResource("CircleShape2D_1")
 
-[node name="HealthComponent" type="Node" parent="."]
+[node name="HealthComponent" type="Node" parent="." unique_id=1699203098]
 script = ExtResource("3")
-max_health = 150.0
+max_health = 85.0
 
-[node name="Hitbox" type="Area2D" parent="."]
+[node name="Hitbox" type="Area2D" parent="." unique_id=484169269]
 collision_layer = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1714032772]
 shape = SubResource("CircleShape2D_2")
 
 [connection signal="died" from="HealthComponent" to="." method="_on_died"]

@@ -47,7 +47,7 @@ func send_telemetry(payload: Dictionary) -> void:
 		ai_prediction_received.emit(false, {})
 
 ## Callback when the HTTP request finishes
-func _on_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
+func _on_request_completed(result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
 	is_request_in_progress = false
 	
 	print("[NetworkManager] HTTP Request completed. Result: ", result, ", Status Code: ", response_code)
