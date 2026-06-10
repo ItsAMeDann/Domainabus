@@ -1,20 +1,93 @@
 [gd_scene format=3 uid="uid://t4050or55px3"]
 
 [ext_resource type="Script" uid="uid://d1w2xjxi2w4uq" path="res://Game/Bullet/explosion.gd" id="1"]
-[ext_resource type="Texture2D" uid="uid://dqdlbqcdx2djf" path="res://icon.svg" id="2"]
+[ext_resource type="Texture2D" uid="uid://7lo2rbxt5uso" path="res://Asset/Placeholder/explosion.png" id="2_ogtp5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
 radius = 238.10292
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_37hdb"]
+atlas = ExtResource("2_ogtp5")
+region = Rect2(0, 1600, 800, 800)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gcstj"]
+atlas = ExtResource("2_ogtp5")
+region = Rect2(2400, 800, 800, 800)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sk21y"]
+atlas = ExtResource("2_ogtp5")
+region = Rect2(1600, 800, 800, 800)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1o1c2"]
+atlas = ExtResource("2_ogtp5")
+region = Rect2(800, 800, 800, 800)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6gx14"]
+atlas = ExtResource("2_ogtp5")
+region = Rect2(0, 800, 800, 800)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8v1sr"]
+atlas = ExtResource("2_ogtp5")
+region = Rect2(2400, 0, 800, 800)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1hg1n"]
+atlas = ExtResource("2_ogtp5")
+region = Rect2(1600, 0, 800, 800)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_14qe1"]
+atlas = ExtResource("2_ogtp5")
+region = Rect2(800, 0, 800, 800)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dnc5"]
+atlas = ExtResource("2_ogtp5")
+region = Rect2(0, 0, 800, 800)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q7u62"]
+atlas = ExtResource("2_ogtp5")
+region = Rect2(800, 1600, 800, 800)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4mgh3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_37hdb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gcstj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sk21y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1o1c2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6gx14")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8v1sr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1hg1n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_14qe1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3dnc5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q7u62")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 36.0
+}]
 
 [node name="Explosion" type="Area2D" unique_id=361469588]
 collision_layer = 4
 collision_mask = 2
 script = ExtResource("1")
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1113825824]
-modulate = Color(1, 0.8, 0.2, 0.8)
-scale = Vector2(3, 3)
-texture = ExtResource("2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=254230559]
 shape = SubResource("CircleShape2D_1")
@@ -23,6 +96,36 @@ shape = SubResource("CircleShape2D_1")
 wait_time = 0.4
 one_shot = true
 autostart = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=126427767]
+modulate = Color(1, 0.65, 0, 1)
+scale = Vector2(0.58, 0.58)
+sprite_frames = SubResource("SpriteFrames_4mgh3")
+animation = &"explode"
+autoplay = "explode"
+
+[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="." unique_id=1777511511]
+modulate = Color(1, 0.65, 0, 1)
+scale = Vector2(0.245, 0.245)
+sprite_frames = SubResource("SpriteFrames_4mgh3")
+animation = &"explode"
+autoplay = "explode"
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="." unique_id=1773979793]
+modulate = Color(1, 0.65, 0, 1)
+rotation = 1.2566371
+scale = Vector2(0.58, 0.58)
+sprite_frames = SubResource("SpriteFrames_4mgh3")
+animation = &"explode"
+autoplay = "explode"
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="." unique_id=12465097]
+modulate = Color(1, 0.65, 0, 1)
+rotation = 2.0856686
+scale = Vector2(0.58, 0.58)
+sprite_frames = SubResource("SpriteFrames_4mgh3")
+animation = &"explode"
+autoplay = "explode"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="DurationTimer" to="." method="_on_duration_timer_timeout"]

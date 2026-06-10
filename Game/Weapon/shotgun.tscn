@@ -1,15 +1,15 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://bxbfwgr0gh2pp"]
 
-[ext_resource type="Script" path="res://Game/Weapon/shotgun.gd" id="1"]
-[ext_resource type="Texture2D" path="res://Asset/Placeholder/shotgun.png" id="2"]
+[ext_resource type="Script" uid="uid://b8qyvkngeauuf" path="res://Game/Weapon/shotgun.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://bjhf7ysfankyr" path="res://Asset/Placeholder/shotgun.png" id="2"]
 
-[node name="Shotgun" type="Node2D"]
+[node name="Shotgun" type="Node2D" unique_id=743813248]
 script = ExtResource("1")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=758966308]
 position = Vector2(25, 0)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("2")
 
-[node name="Muzzle" type="Marker2D" parent="."]
-position = Vector2(70, 0)
+[node name="Muzzle" type="Marker2D" parent="." unique_id=365424390]
+position = Vector2(93, -15)

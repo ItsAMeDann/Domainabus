@@ -21,6 +21,7 @@ var knockback_velocity: Vector2 = Vector2.ZERO
 var camera: Camera2D
 var shake_intensity: float = 0.0
 var shake_decay: float = 5.0
+var is_looking_left:bool = false
 
 func _ready() -> void:
 	add_to_group("player")
@@ -84,7 +85,7 @@ func _physics_process(delta: float) -> void:
 	weapon_mount.look_at(mouse_pos)
 	
 	# Flip sprite depending on mouse position relative to player
-	var is_looking_left := mouse_pos.x < global_position.x
+	is_looking_left = mouse_pos.x < global_position.x
 	sprite.flip_h = is_looking_left
 	
 	# Flip weapon vertically to prevent it from looking upside down when aiming left

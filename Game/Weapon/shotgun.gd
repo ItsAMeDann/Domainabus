@@ -25,8 +25,10 @@ func fire() -> void:
 		var angle_offset_deg := -20.0 + (i * (40.0 / 7.0))
 		var angle_offset_rad := deg_to_rad(angle_offset_deg)
 		bullet.direction = Vector2.RIGHT.rotated(base_rotation + angle_offset_rad)
+		bullet.rotation = base_rotation + angle_offset_rad
 		bullet.speed = bullet_speed
 		bullet.damage = bullet_damage
+		bullet.modulate = Color("b601d8")
 		bullet.weapon_type = "macrolide"
 		bullet.knockback_force = knockback_force
 		
@@ -37,12 +39,11 @@ func fire() -> void:
 			
 	# Muzzle Flash
 	var flash := Sprite2D.new()
-	flash.texture = preload("res://icon.svg")
-	flash.modulate = Color(1.0, 1.0, 0.5, 0.8)
+	flash.texture = preload("res://Asset/Placeholder/MuzzleFlash m.png")
 	flash.scale = Vector2(0.2, 0.2)
-	flash.rotation = randf() * TAU
-	flash.global_position = muzzle.global_position
-	get_tree().current_scene.add_child(flash)
+	var offset:Vector2 = Vector2(flash.texture.get_size().x / 3, 0)
+	flash.position += offset
+	muzzle.add_child(flash)
 	
 	var tween := flash.create_tween().set_parallel(true)
 	tween.tween_property(flash, "scale", Vector2(0.8, 0.8), 0.08).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)

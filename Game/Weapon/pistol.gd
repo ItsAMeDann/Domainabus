@@ -16,8 +16,10 @@ func fire() -> void:
 	var bullet := BULLET_SCENE.instantiate() as Area2D
 	bullet.global_position = muzzle.global_position
 	bullet.direction = Vector2.RIGHT.rotated(global_rotation)
+	bullet.rotation = get_parent().rotation
 	bullet.speed = bullet_speed
 	bullet.damage = bullet_damage
+	bullet.modulate = Color("17ffff")
 	bullet.weapon_type = "beta_lactam"
 	bullet.knockback_force = 60.0 # Memberikan sedikit knockback dan stun
 	
@@ -30,12 +32,14 @@ func fire() -> void:
 		
 	# Muzzle Flash
 	var flash := Sprite2D.new()
-	flash.texture = preload("res://icon.svg")
-	flash.modulate = Color(1.0, 1.0, 0.5, 0.8)
+	flash.texture = preload("res://Asset/Placeholder/MuzzleFlash s.png")
+	#flash.rotation = get_parent().rotation
+	#flash.global_position = muzzle.global_position + offset
+	#get_tree().current_scene.add_child(flash)
 	flash.scale = Vector2(0.2, 0.2)
-	flash.rotation = randf() * TAU
-	flash.global_position = muzzle.global_position
-	get_tree().current_scene.add_child(flash)
+	var offset:Vector2 = Vector2(flash.texture.get_size().x / 3, 0)
+	flash.position += offset
+	muzzle.add_child(flash)
 	
 	var tween := flash.create_tween().set_parallel(true)
 	tween.tween_property(flash, "scale", Vector2(0.8, 0.8), 0.08).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)

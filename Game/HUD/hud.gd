@@ -7,6 +7,11 @@ extends CanvasLayer
 @onready var weapon_label: Label = $Control/BottomLeft/WeaponLabel
 @onready var weapon_icon: TextureRect = $Control/BottomLeft/WeaponIcon
 @onready var wave_banner: Label = $Control/Center/WaveBanner
+@onready var inter_wave_center: VBoxContainer = $Control/InterWaveCenter
+@onready var interwave_title: Label = $Control/InterWaveCenter/InterwaveTitle
+@onready var interwave_enemy_desc: Label = $Control/InterWaveCenter/InterwaveEnemyDesc
+@onready var interwave_enemy_dom: Label = $Control/InterWaveCenter/InterwaveEnemyDom
+@onready var interwave_next_wave_com: Label = $Control/InterWaveCenter/InterwaveNextWaveCom
 
 # -- JUICE & LOGIC NEW NODES --
 @onready var hurt_vignette: ColorRect = $HurtVignette
@@ -24,9 +29,8 @@ func _ready() -> void:
 		hurt_vignette.visible = false
 		hurt_vignette.modulate.a = 0.0
 		
-	if inter_wave_label:
-		inter_wave_label.visible = false
-		inter_wave_label.modulate.a = 0.0
+	if inter_wave_center:
+		inter_wave_center.visible = false
 
 	call_deferred("_connect_signals")
 
@@ -120,6 +124,8 @@ func _on_wave_started(wave_num: int) -> void:
 	show_wave_banner(wave_num)
 	if inter_wave_label:
 		inter_wave_label.visible = false
+	if inter_wave_center:
+		inter_wave_center.hide()
 
 func _on_wave_ended(_wave_num: int) -> void:
 	pass
@@ -155,8 +161,17 @@ func _on_player_died() -> void:
 		var tween := create_tween()
 		tween.tween_property(game_over_panel, "modulate:a", 1.0, 0.5)
 
-func show_inter_wave_stats(text: String) -> void:
-	if inter_wave_label:
-		inter_wave_label.visible = true
-		inter_wave_label.modulate.a = 1.0
-		inter_wave_label.text = text
+func show_inter_wave_stats(wave_stats: Dictionary) -> void:
+	#var wave_stats := {
+		#"title": "WAVE %d CLEARED!" % current_wave,
+		#"beta_res": "Beta-lactam Res: %.0f%%" % avg_beta,
+		#"macro_res": "Macrolide Res: %.0f%%" % avg_macro,
+		#"cipro_res": "Cipro Res: %.0f%%" % avg_cipro,
+		#"dominant_threat": "Dominant Threat: %s" % dominant_type.capitalize(),
+		#"next_wave": "Press [SPACE] or [ENTER] to start Wave %d" % (current_wave + 1)
+	#}
+	inter_wave_center.show()
+	interwave_title.text = wave_stats.title
+	interwave_enemy_desc.text = "\n".join([wave_stats.beta_res, wave_stats.macro_res, wave_stats.cipro_res])
+	interwave_enemy_dom.text = wave_stats.dominant_threat
+	interwave_next_wave_com.text = wave_stats.next_wave
