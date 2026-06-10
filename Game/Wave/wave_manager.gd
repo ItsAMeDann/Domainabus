@@ -363,13 +363,6 @@ func _on_ai_prediction_received(success: bool, response_data: Dictionary) -> voi
 		counts["bacteriophage"] = 5
 	
 	# UI Representation
-	var stats_text := "WAVE %d CLEARED!\n\n" % current_wave
-	stats_text += "Evolved Bacterial Resistance Stats:\n"
-	stats_text += "• Beta-lactam Res: %.0f%%\n" % avg_beta
-	stats_text += "• Macrolide Res: %.0f%%\n" % avg_macro
-	stats_text += "• Cipro Res: %.0f%%\n\n" % avg_cipro
-	stats_text += "Dominant Threat: %s\n\n" % dominant_type.capitalize()
-	stats_text += "Press [SPACE] or [ENTER] to start Wave %d" % (current_wave + 1)
 	var wave_stats := {
 		"title": "WAVE %d CLEARED!" % current_wave,
 		"beta_res": "Beta-lactam Res: %.0f%%" % avg_beta,

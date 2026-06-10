@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bjd3wtu6whk1y" path="res://Game/UI/main_menu.gd" id="1"]
 
+[sub_resource type="SystemFont" id="SystemFont_bru77"]
+font_names = PackedStringArray("Segoe UI Emoji")
+
 [node name="MainMenu" type="Control" unique_id=1190640428]
 layout_mode = 3
 anchors_preset = 15
@@ -58,6 +61,7 @@ custom_minimum_size = Vector2(280, 50)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
 theme_override_colors/font_hover_color = Color(0.3, 0.85, 0.95, 1)
+theme_override_fonts/font = SubResource("SystemFont_bru77")
 theme_override_font_sizes/font_size = 24
 text = "▶  PLAY"
 
@@ -66,6 +70,7 @@ custom_minimum_size = Vector2(280, 50)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
 theme_override_colors/font_hover_color = Color(0.3, 0.85, 0.95, 1)
+theme_override_fonts/font = SubResource("SystemFont_bru77")
 theme_override_font_sizes/font_size = 24
 text = "⚙  SETTINGS"
 
@@ -74,6 +79,7 @@ custom_minimum_size = Vector2(280, 50)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
 theme_override_colors/font_hover_color = Color(0.3, 0.85, 0.95, 1)
+theme_override_fonts/font = SubResource("SystemFont_bru77")
 theme_override_font_sizes/font_size = 24
 text = "📜  CREDITS"
 
@@ -82,6 +88,7 @@ custom_minimum_size = Vector2(280, 50)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.7, 0.3, 0.3, 1)
 theme_override_colors/font_hover_color = Color(1, 0.4, 0.4, 1)
+theme_override_fonts/font = SubResource("SystemFont_bru77")
 theme_override_font_sizes/font_size = 24
 text = "✕  QUIT"
 
@@ -237,8 +244,9 @@ text = "[center][b]DOMAINABUS[/b]
 Medical Rogue-lite Simulation
 
 [b]— Development Team —[/b]
-Lead Developer: [Your Name]
-Game Design: [Your Name]
+Lead Developer: Laudzan Ananda Syawaliandi
+Game Developer: Hamdan Arif
+AI Engineer: Hosea Dave Anderson
 
 [b]— Assets —[/b]
 BGM: Hitslab - Game Gaming Video Game Music

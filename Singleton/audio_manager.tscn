@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://8kkqb0qoxmlv" path="res://Audio/SFX/change_weapon.wav" id="9_67xvk"]
 
 [node name="AudioManager" type="Node" unique_id=1136075505]
+process_mode = 3
 script = ExtResource("1_pff31")
 
 [node name="Node" type="Node" parent="." unique_id=326984758]

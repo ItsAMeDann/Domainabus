@@ -30,6 +30,7 @@ func _ready() -> void:
 	add_to_group("enemy")
 	player_ref = get_tree().get_first_node_in_group("player")
 	spawn_time_ms = Time.get_ticks_msec()
+	process_mode = Node.PROCESS_MODE_PAUSABLE
 	
 	if health_component and not health_component.died.is_connected(_on_died):
 		health_component.died.connect(_on_died)
