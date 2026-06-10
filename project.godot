@@ -13,7 +13,7 @@ config_version=5
 config/name="Domainabus"
 run/main_scene="res://Game/UI/main_menu.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://bhriecjf3dghh"
 
 [autoload]
 

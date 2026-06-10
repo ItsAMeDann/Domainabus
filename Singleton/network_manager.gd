@@ -61,6 +61,8 @@ func _execute_request() -> void:
 
 ## Callback when the HTTP request finishes
 func _on_request_completed(result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
+	is_request_in_progress = false
+	
 	print("[NetworkManager] HTTP Request completed. Result: ", result, ", Status Code: ", response_code)
 
 	# Check for total network/connection failures

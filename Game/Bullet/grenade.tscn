@@ -1,26 +1,28 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene format=3 uid="uid://b3hqjmb44c0il"]
 
-[ext_resource type="Script" path="res://Game/Bullet/grenade.gd" id="1"]
-[ext_resource type="Texture2D" path="res://Asset/Placeholder/small_bullet.png" id="2"]
+[ext_resource type="Script" uid="uid://dltstxvhktb52" path="res://Game/Bullet/grenade.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://qilnn3j4vjr7" path="res://Asset/Placeholder/grenade.png" id="2_wd6be"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
-radius = 6.0
+radius = 17.0
 
-[node name="Grenade" type="Area2D"]
+[node name="Grenade" type="Area2D" unique_id=1394639649]
+process_mode = 1
 collision_layer = 4
 collision_mask = 10
-monitoring = true
 script = ExtResource("1")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=197083719]
 modulate = Color(1, 0.5, 0, 1)
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("2")
+scale = Vector2(2, 2)
+texture = ExtResource("2_wd6be")
+offset = Vector2(-4.2, 0)
+flip_h = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1543236717]
 shape = SubResource("CircleShape2D_1")
 
-[node name="FuseTimer" type="Timer" parent="."]
+[node name="FuseTimer" type="Timer" parent="." unique_id=409308448]
 wait_time = 1.5
 one_shot = true
 autostart = true
