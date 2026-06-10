@@ -18,10 +18,10 @@ config/icon="res://icon.svg"
 [autoload]
 
 Global="*res://Singleton/global.gd"
-_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 AudioManager="*uid://d2xk637qrovd7"
 HitstopManager="*res://Singleton/hitstop_manager.gd"
 NetworkManager="*res://Singleton/network_manager.gd"
+_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 [display]
 
